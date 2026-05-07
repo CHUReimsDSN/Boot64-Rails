@@ -2,9 +2,9 @@ require "rails/command"
 require "tty-prompt"
 
 class Boot64Command < Rails::Command::Base
-    desc "boot64", "Lancer boot64"
-    
-    def perform
+    desc "run", "Lancer boot64"
+
+    def run
         prompt = TTY::Prompt.new
 
         choices = prompt.multi_select(
