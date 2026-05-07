@@ -42,6 +42,11 @@ module Boot64
                 end
             end
 
+            def leave
+                clear_terminal
+                return
+            end
+
             def get_menu_definition(name)
                 case name
                 when MENU_HOME_NAME
@@ -73,7 +78,7 @@ module Boot64
                         },
                         {
                             label: 'Quitter',
-                            action: -> () { return }
+                            action: -> () { leave }
                         }
                     ]
                 }
