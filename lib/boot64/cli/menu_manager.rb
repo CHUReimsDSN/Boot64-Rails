@@ -19,7 +19,7 @@ module Boot64
             end
 
             private
-            def self.get_menu_definition(name)
+            def get_menu_definition(name)
                 case name
                 when MENU_HOME_NAME
                     get_home_definition
@@ -28,7 +28,7 @@ module Boot64
                 end
             end
 
-            def self.get_home_definition
+            def get_home_definition
                 {
                     title: 'Bienvenue dans Boot64 !',
                     options: [
