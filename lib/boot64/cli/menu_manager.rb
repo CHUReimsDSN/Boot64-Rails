@@ -64,7 +64,15 @@ module Boot64
                 {
                     behaviour: :action_on_select,
                     on_mounted: -> () { 
-                        puts self.runner.pastel.decorate(self.runner.font.write('Boot64 ⚡'), :yellow, :bold)
+                        puts self.runner.pastel.decorate("""
+______             _    ____    ___       ___
+| ___ \           | |  / ___|  /   |     /   /
+| |_/ / ___   ___ | |_/ /___  / /| |    /_  /_
+| ___ \/ _ \ / _ \| __| ___ \/ /_| |     /  _/
+| |_/ / (_) | (_) | |_| \_/ |\___  |    / ,'
+\____/ \___/ \___/ \__\_____/    |_/   /'
+                                                                       
+                        """, :yellow, :bold)
                     },
                     title: 'Menu principal',
                     options: [
