@@ -1,5 +1,3 @@
-require
-
 namespace :boot64 do
   desc "Launch boot64 CLI"
   task run: :environment do
