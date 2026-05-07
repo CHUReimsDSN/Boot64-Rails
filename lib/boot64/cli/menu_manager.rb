@@ -2,9 +2,8 @@ module Boot64
     module CLI
         class MenuManager
 
-            attr_accessor :runner,
-                          :has_been_introduced
-                        
+            attr_accessor :runner
+
             MENU_HOME_NAME = 'home'.freeze
             MENU_GENERATE_NAME = 'generate'.freeze
             MENU_ABOUT_NAME = 'about'.freeze
@@ -16,11 +15,6 @@ module Boot64
             end
 
             private
-            def puts_intro_message
-                puts self.runner.font.write('Boot64')
-                self.has_been_introduced = true
-            end
-
             def clear_terminal
                 if Gem.win_platform?
                     system("cls")
@@ -32,9 +26,6 @@ module Boot64
 
             def run_menu(name)
                 clear_terminal
-                if !self.has_been_introduced
-                    puts_intro_message
-                end
                 definition = get_menu_definition(name)
                 if definition[:on_mounted]
                     definition[:on_mounted].call
@@ -68,6 +59,9 @@ module Boot64
             def get_home_definition
                 {
                     behaviour: :action_on_select,
+                    on_mounted: -> () { 
+                        puts self.runner.pastel.decorate(self.runner.font.write('Boot64', :cyan, :bold))
+                    }
                     title: 'Menu principal',
                     options: [
                         {
