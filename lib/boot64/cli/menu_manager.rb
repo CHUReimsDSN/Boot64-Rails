@@ -23,6 +23,7 @@ module Boot64
             end
 
             def run_menu(name)
+                print "\e[2J\e[H"
                 definition = get_menu_definition(name)
                 if definition[:on_mounted]
                     definition[:on_mounted].call
