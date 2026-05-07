@@ -2,22 +2,22 @@ module Boot64
     module CLI
         class MenuManager
 
-            attr_accessor :prompt,
+            attr_accessor :runner,
                           :has_been_introduced
                         
             MENU_HOME_NAME = 'home'.freeze
             MENU_GENERATE_NAME = 'generate'.freeze
             MENU_ABOUT_NAME = 'about'.freeze
 
-            def initialize(prompt)
-                self.prompt = prompt
+            def initialize(runner)
+                self.runner = runner
                 self.has_been_introduced = false
                 run_menu(MENU_HOME_NAME)
             end
 
             private
             def puts_intro_message
-                puts self.prompt.font.write('Boot64')
+                puts self.runner.prompt.font.write('Boot64')
                 self.has_been_introduced = true
             end
 
@@ -39,7 +39,7 @@ module Boot64
                 if definition[:on_mounted]
                     definition[:on_mounted].call
                 end
-                response = prompt.select(self.prompt.pastel.red("#{definition[:title]} \n"), definition[:options].map {|option| option[:label]})
+                response = self.runner.prompt.select(self.runner.pastel.red("#{definition[:title]} \n"), definition[:options].map {|option| option[:label]})
                 case definition[:behaviour]
                 when :action_on_select
                     option_found = definition[:options].find {|option| option[:label] == response}

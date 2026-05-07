@@ -20,7 +20,7 @@ module Boot64
                 self.prompt = TTY::Prompt.new
                 self.font = TTY::Font.new(:doom)
                 self.pastel = Pastel.new
-                self.menu_manager = Boot64::CLI::MenuManager.new(self.prompt)
+                self.menu_manager = Boot64::CLI::MenuManager.new(self)
             end
 
         end
