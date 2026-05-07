@@ -26,6 +26,8 @@ Gem::Specification.new do |spec|
   # Uncomment to register a new dependency of your gem
   spec.add_dependency "activerecord", ">= 6.0"
   spec.add_dependency "tty-prompt"
+  spec.add_dependency "tty-progressbar"
+  spec.add_dependency "tty-font"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html

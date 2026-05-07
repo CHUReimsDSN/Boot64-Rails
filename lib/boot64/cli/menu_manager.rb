@@ -1,21 +1,32 @@
+require "tty-font"
+
 module Boot64
     module CLI
         class MenuManager
 
-            attr_accessor :prompt
+            attr_accessor :prompt,
                         
             MENU_HOME_NAME = 'home'.freeze
             MENU_GENERATE_NAME = 'generate'.freeze
             MENU_ABOUT_NAME = 'about'.freeze
 
             def initialize(prompt)
+                puts_intro_message
                 self.prompt = prompt
                 run_menu(MENU_HOME_NAME)
             end
 
             private
+            def puts_intro_message
+                font = TTY::Font.new(:doom)
+                puts font.write('Boot64')
+            end
+
             def run_menu(name)
                 definition = get_menu_definition(name)
+                if definition[:on_mounted]
+                    definition[:on_mounted].call
+                end
                 response = prompt.select(definition[:title], definition[:options].map {|option| option[:label]})
                 puts response
                 puts response.class
@@ -25,7 +36,6 @@ module Boot64
                     if option_found.nil?
                         raise
                     end
-                    puts Session.first&.reports.count || 'lsdlfsldflsdflsdlf'
                     option_found[:action].call
                 else
                     raise
@@ -48,7 +58,7 @@ module Boot64
             def get_home_definition
                 {
                     behaviour: :action_on_select,
-                    title: 'Bienvenue dans Boot64 !',
+                    title: 'Menu principal',
                     options: [
                         {
                             label: 'Génération fichier TypeScript',
@@ -77,6 +87,11 @@ module Boot64
 
             def get_about_definition
                 {
+                    on_mounted: -> () { 
+                        font = TTY::Font.new(:doom)
+                        puts font.write('By Jules Debeaumont')
+                        puts font.write('Version 0')
+                    }
                     behaviour: :action_on_select,
                     title: 'Test !',
                     options: [
