@@ -91,7 +91,7 @@ module Boot64
                         font = TTY::Font.new(:doom)
                         puts font.write('By Jules Debeaumont')
                         puts font.write('Version 0')
-                    }
+                    },
                     behaviour: :action_on_select,
                     title: 'Test !',
                     options: [
