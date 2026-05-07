@@ -18,7 +18,7 @@ module Boot64
                 response = prompt.select(definition[:title], definition[:options].map {|option| option[:label]})
                 case definition[:behaviour]
                 when :action_on_select,
-                    option_found = definition[:options].find {|option| option[:label] == repsonse}
+                    option_found = definition[:options].find {|option| option[:label] == response}
                     if option_found.nil?
                         raise
                     end
