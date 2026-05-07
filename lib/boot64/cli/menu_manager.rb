@@ -17,7 +17,7 @@ module Boot64
 
             private
             def puts_intro_message
-                puts self.runner.prompt.font.write('Boot64')
+                puts self.runner.font.write('Boot64')
                 self.has_been_introduced = true
             end
 
