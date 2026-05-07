@@ -20,14 +20,11 @@ module Boot64
                 puts response.class
                 case definition[:behaviour]
                 when :action_on_select
-                    option_found = definition[:options].find do |option| 
-                        puts "!!!!"
-                        puts option
-                        option[:label] == response
-                    end
+                    option_found = definition[:options].find {|option| option[:label] == response}
                     if option_found.nil?
                         raise
                     end
+                    puts ApplicationRecord.descendants.count
                     option_found[:action].call
                 else
                     raise
@@ -63,6 +60,19 @@ module Boot64
             end
 
             def get_generate_definition
+                {
+                    behaviour: :action_on_select,
+                    title: 'Test !',
+                    options: [
+                        {
+                            label: 'Génération fichier TypeScript',
+                            action: -> () { run_menu(MENU_GENERATE_NAME) }
+                        }
+                    ]
+                }
+            end
+
+            def get_about_definition
                 {
                     behaviour: :action_on_select,
                     title: 'Test !',
