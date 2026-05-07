@@ -9,7 +9,6 @@ module Boot64
 
             def self.boot
                 instance = self.new
-                instance.launch
             end
 
             private
