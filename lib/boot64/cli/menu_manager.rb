@@ -39,7 +39,7 @@ module Boot64
                 if definition[:on_mounted]
                     definition[:on_mounted].call
                 end
-                response = self.runner.prompt.select(self.runner.pastel.red("#{definition[:title]} \n"), definition[:options].map {|option| option[:label]})
+                response = self.runner.prompt.select(self.runner.pastel.decorate("#{definition[:title]} \n", :bold), definition[:options].map {|option| option[:label]})
                 case definition[:behaviour]
                 when :action_on_select
                     option_found = definition[:options].find {|option| option[:label] == response}
