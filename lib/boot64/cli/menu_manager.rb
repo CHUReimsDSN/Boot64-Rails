@@ -16,6 +16,8 @@ module Boot64
             def run_menu(name)
                 definition = get_menu_definition(name)
                 response = prompt.select(definition[:title], definition[:options].map {|option| option[:label]})
+                puts response
+                puts response.class
                 case definition[:behaviour]
                 when :action_on_select,
                     option_found = definition[:options].find {|option| option[:label] == response}
