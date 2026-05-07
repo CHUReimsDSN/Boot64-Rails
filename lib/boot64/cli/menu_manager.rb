@@ -70,6 +70,10 @@ module Boot64
                         {
                             label: 'A propos',
                             action: -> () { run_menu(MENU_ABOUT_NAME) }
+                        },
+                        {
+                            label: 'Quitter',
+                            action: -> () { return }
                         }
                     ]
                 }
