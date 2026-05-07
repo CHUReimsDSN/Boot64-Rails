@@ -1,5 +1,3 @@
-require "tty-font"
-
 module Boot64
     module CLI
         class MenuManager
@@ -19,26 +17,29 @@ module Boot64
 
             private
             def puts_intro_message
-                font = TTY::Font.new(:doom)
-                puts font.write('Boot64')
+                puts self.prompt.font.write('Boot64')
                 self.has_been_introduced = true
             end
 
             def clear_terminal
-                Gem.win_platform? ? system("cls") : system("clear")
+                if Gem.win_platform?
+                    system("cls")
+                else
+                     system("clear")
+                end
                 print "\e[2J\e[H"
             end
 
             def run_menu(name)
+                clear_terminal
                 if !self.has_been_introduced
                     puts_intro_message
                 end
-                clear_terminal
                 definition = get_menu_definition(name)
                 if definition[:on_mounted]
                     definition[:on_mounted].call
                 end
-                response = prompt.select("#{definition[:title]} \n", definition[:options].map {|option| option[:label]})
+                response = prompt.select(self.prompt.pastel.red("#{definition[:title]} \n"), definition[:options].map {|option| option[:label]})
                 case definition[:behaviour]
                 when :action_on_select
                     option_found = definition[:options].find {|option| option[:label] == response}
@@ -97,9 +98,7 @@ module Boot64
             def get_about_definition
                 {
                     on_mounted: -> () { 
-                        font = TTY::Font.new(:doom)
-                        puts font.write('By Jules Debeaumont')
-                        puts font.write('Version 0')
+                        puts "about!!"
                     },
                     behaviour: :action_on_select,
                     title: 'Test !',

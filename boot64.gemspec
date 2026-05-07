@@ -28,6 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "tty-prompt"
   spec.add_dependency "tty-progressbar"
   spec.add_dependency "tty-font"
+  spec.add_dependency "pastel"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
