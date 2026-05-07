@@ -28,8 +28,6 @@ module Boot64
                     definition[:on_mounted].call
                 end
                 response = prompt.select(definition[:title], definition[:options].map {|option| option[:label]})
-                puts response
-                puts response.class
                 case definition[:behaviour]
                 when :action_on_select
                     option_found = definition[:options].find {|option| option[:label] == response}
@@ -96,7 +94,7 @@ module Boot64
                     title: 'Test !',
                     options: [
                         {
-                            label: 'Génération fichier TypeScript',
+                            label: 'Retour',
                             action: -> () { run_menu(MENU_GENERATE_NAME) }
                         }
                     ]
