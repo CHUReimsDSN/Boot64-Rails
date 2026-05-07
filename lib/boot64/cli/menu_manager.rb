@@ -30,10 +30,10 @@ module Boot64
 
             def self.get_home_definition
                 {
-                    title: 'Bienvenue dans Boot64 !'
+                    title: 'Bienvenue dans Boot64 !',
                     options: [
                         {
-                            label: 'Génération fichier TypeScript'
+                            label: 'Génération fichier TypeScript',
                             action: -> () { set_current_menu(MENU_GENERATE_NAME) }
                         }
                     ]
