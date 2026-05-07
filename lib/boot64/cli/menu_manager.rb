@@ -6,6 +6,7 @@ module Boot64
                         
             MENU_HOME_NAME = 'home'.freeze
             MENU_GENERATE_NAME = 'generate'.freeze
+            MENU_ABOUT_NAME = 'about'.freeze
 
             def initialize(prompt)
                 self.prompt = prompt
@@ -24,7 +25,7 @@ module Boot64
                     if option_found.nil?
                         raise
                     end
-                    puts ApplicationRecord.descendants.count
+                    puts Session.first&.reports.count || 'lsdlfsldflsdflsdlf'
                     option_found[:action].call
                 else
                     raise
@@ -37,6 +38,8 @@ module Boot64
                     get_home_definition
                 when MENU_GENERATE_NAME
                     get_generate_definition
+                when MENU_ABOUT_NAME
+                    get_about_definition
                 else
                     get_home_definition
                 end
@@ -53,7 +56,7 @@ module Boot64
                         },
                         {
                             label: 'A propos',
-                            action: -> () { run_menu(MENU_GENERATE_NAME) }
+                            action: -> () { run_menu(MENU_ABOUT_NAME) }
                         }
                     ]
                 }
