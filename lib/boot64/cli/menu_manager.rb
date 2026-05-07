@@ -20,11 +20,11 @@ module Boot64
                 when :action_on_select,
                     option_found = definition[:options].find {|option| option[:label] == repsonse}
                     if option_found.nil?
-                        return
+                        raise
                     end
                     option_found[:action].call
                 else
-                    return
+                    raise
                 end
             end
 
