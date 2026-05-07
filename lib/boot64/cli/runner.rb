@@ -5,7 +5,7 @@ module Boot64
         class Runner
 
             attr_accessor :prompt,
-                        :menu_manager,
+                          :menu_manager,
 
             def self.boot
                 instance = self.new
@@ -15,11 +15,7 @@ module Boot64
             private
             def initialize
                 self.prompt = TTY::Prompt.new
-                self.menu_manager = Boot64::CLI::MenuManager.new
-            end
-
-            def launch
-
+                self.menu_manager = Boot64::CLI::MenuManager.new(self.prompt)
             end
 
         end
