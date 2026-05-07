@@ -10,7 +10,6 @@ module Boot64
 
             def initialize(runner)
                 self.runner = runner
-                self.has_been_introduced = false
                 run_menu(MENU_HOME_NAME)
             end
 
