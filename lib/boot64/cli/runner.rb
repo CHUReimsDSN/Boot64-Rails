@@ -17,9 +17,9 @@ module Boot64
 
             private
             def initialize
-                self.prompt = TTY::Prompt.new
                 self.font = TTY::Font.new(:doom)
                 self.pastel = Pastel.new
+                self.prompt = TTY::Prompt.new(active_color: self.pastel.yellow.detach)
                 self.menu_manager = Boot64::CLI::MenuManager.new(self)
             end
 
