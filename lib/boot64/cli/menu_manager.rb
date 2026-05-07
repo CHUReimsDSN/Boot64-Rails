@@ -20,7 +20,6 @@ module Boot64
                 puts response.class
                 case definition[:behaviour]
                 when :action_on_select
-                    puts definition
                     option_found = definition[:options].find do |option| 
                         puts "!!!!"
                         puts option
