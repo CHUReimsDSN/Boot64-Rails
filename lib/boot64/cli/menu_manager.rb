@@ -20,7 +20,11 @@ module Boot64
                 puts response.class
                 case definition[:behaviour]
                 when :action_on_select,
-                    option_found = definition[:options].find {|option| option[:label] == response}
+                    option_found = definition[:options].find do |option| 
+                        puts "!!!!"
+                        puts option
+                        option[:label] == response
+                    end
                     if option_found.nil?
                         raise
                     end
