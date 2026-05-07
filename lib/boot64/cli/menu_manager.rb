@@ -25,6 +25,7 @@ module Boot64
             end
 
             def clear_terminal
+                Gem.win_platform? ? system("cls") : system("clear")
                 print "\e[2J\e[H"
             end
 
@@ -37,7 +38,7 @@ module Boot64
                 if definition[:on_mounted]
                     definition[:on_mounted].call
                 end
-                response = prompt.select(definition[:title], definition[:options].map {|option| option[:label]})
+                response = prompt.select("#{definition[:title]} \n", definition[:options].map {|option| option[:label]})
                 case definition[:behaviour]
                 when :action_on_select
                     option_found = definition[:options].find {|option| option[:label] == response}
