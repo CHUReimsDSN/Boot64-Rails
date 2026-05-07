@@ -1,3 +1,5 @@
+require "tty-prompt"
+
 class Boot64::Cli::Runner
 
     attr_accessor :prompt,
