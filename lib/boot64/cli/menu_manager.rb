@@ -5,14 +5,15 @@ module Boot64
         class MenuManager
 
             attr_accessor :prompt,
+                          :has_been_introduced
                         
             MENU_HOME_NAME = 'home'.freeze
             MENU_GENERATE_NAME = 'generate'.freeze
             MENU_ABOUT_NAME = 'about'.freeze
 
             def initialize(prompt)
-                puts_intro_message
                 self.prompt = prompt
+                self.has_been_introduced = false
                 run_menu(MENU_HOME_NAME)
             end
 
@@ -20,10 +21,18 @@ module Boot64
             def puts_intro_message
                 font = TTY::Font.new(:doom)
                 puts font.write('Boot64')
+                self.has_been_introduced = true
+            end
+
+            def clear_terminal
+                print "\e[2J\e[H"
             end
 
             def run_menu(name)
-                print "\e[2J\e[H"
+                if !self.has_been_introduced
+                    puts_intro_message
+                end
+                clear_terminal
                 definition = get_menu_definition(name)
                 if definition[:on_mounted]
                     definition[:on_mounted].call
@@ -96,7 +105,7 @@ module Boot64
                     options: [
                         {
                             label: 'Retour',
-                            action: -> () { run_menu(MENU_GENERATE_NAME) }
+                            action: -> () { run_menu(MENU_HOME_NAME) }
                         }
                     ]
                 }
