@@ -23,8 +23,21 @@ module Boot64
                 print "\e[2J\e[H"
             end
 
+            def display_logo
+                puts self.runner.pastel.decorate(%q{
+______             _    ____    ___       ____
+| ___ \           | |  / ___|  /   |     /   /
+| |_/ / ___   ___ | |_/ /___  / /| |    /_  /_
+| ___ \/ _ \ / _ \| __| ___ \/ /_| |     /  _/
+| |_/ / (_) | (_) | |_| \_/ |\___  |    / ,'
+\____/ \___/ \___/ \__\_____/    |_/   /'
+                                                                       
+                }, :yellow, :bold)
+            end
+
             def run_menu(name)
                 clear_terminal
+                display_logo
                 definition = get_menu_definition(name)
                 if definition[:on_mounted]
                     definition[:on_mounted].call
@@ -63,17 +76,6 @@ module Boot64
             def get_home_definition
                 {
                     behaviour: :action_on_select,
-                    on_mounted: -> () { 
-                        puts self.runner.pastel.decorate(%q{
-______             _    ____    ___       ___
-| ___ \           | |  / ___|  /   |     /   /
-| |_/ / ___   ___ | |_/ /___  / /| |    /_  /_
-| ___ \/ _ \ / _ \| __| ___ \/ /_| |     /  _/
-| |_/ / (_) | (_) | |_| \_/ |\___  |    / ,'
-\____/ \___/ \___/ \__\_____/    |_/   /'
-                                                                       
-                        }, :yellow, :bold)
-                    },
                     title: 'Menu principal',
                     options: [
                         {
