@@ -110,10 +110,15 @@ ______             _    ____    ___       ____
             def get_about_definition
                 {
                     on_mounted: -> () { 
-                        puts "about!!"
+                                        puts self.runner.pastel.decorate("""
+Description : Boot64 est un CLI permettant de générer des APIs TypeScript
+              en se basant sur les modèle définis dans ActiveRecord
+Version : #{Boot64::VERSION}
+
+                """, :yellow, :bold)
                     },
                     behaviour: :action_on_select,
-                    title: 'Test !',
+                    title: '',
                     options: [
                         {
                             label: 'Retour',
