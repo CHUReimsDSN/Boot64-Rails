@@ -31,6 +31,7 @@ module Boot64
 
             def get_string_bold(message)
                 self.pastel.decorate(message, :bold)
+            end
 
             def puts_logo
                 puts self.get_string_highlight(%q{
