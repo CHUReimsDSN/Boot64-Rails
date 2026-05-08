@@ -45,12 +45,12 @@ ______             _    ____    ___       ____
             end
 
             def puts_about_text
-                        puts ("""
-#{self.get_string_highlight("Description", :yellow, :bold)} : Boot64 est un CLI permettant de générer des APIs TypeScript
+                puts ("""
+#{self.get_string_highlight("Description")} : Boot64 est un CLI permettant de générer des APIs TypeScript
               en se basant sur les modèle définis dans ActiveRecord
-#{self.get_string_highlight("Version", :yellow, :bold)} : #{Boot64::VERSION}
+#{self.get_string_highlight("Version")} : #{Boot64::VERSION}
 
-                    """)
+                """)
             end
 
         end
