@@ -42,9 +42,13 @@ ______             _    ____    ___       ____
                 if definition[:on_mounted]
                     definition[:on_mounted].call
                 end
-                response = self.runner.prompt.select(self.runner.pastel.decorate("#{definition[:title]} \n", :bold), definition[:options].map {|option| option[:label]})
                 case definition[:behaviour]
                 when :action_on_select
+                    response = self.runner.prompt.select(
+                        self.runner.pastel.decorate("#{definition[:title]} \n", :bold),
+                        definition[:options].map {|option| option[:label]},
+                        show_help: :never
+                    )
                     option_found = definition[:options].find {|option| option[:label] == response}
                     if option_found.nil?
                         raise
