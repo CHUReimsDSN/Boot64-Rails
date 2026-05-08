@@ -2,7 +2,9 @@ module Boot64
     module CLI
         class MenuManager
 
-            attr_accessor :runner
+            attr_accessor :runner,
+                          :prompt,
+                          :putser
 
             MENU_HOME_NAME = 'home'.freeze
             MENU_GENERATE_NAME = 'generate'.freeze
@@ -10,42 +12,35 @@ module Boot64
 
             def initialize(runner)
                 self.runner = runner
+                self.putser = Boot64::CLI::Putser.new
+                self.prompt = TTY::Prompt.new(active_color: self.putser.get_detached_highlight_color)
                 run_menu(MENU_HOME_NAME)
             end
 
             private
-            def clear_terminal
-                if Gem.win_platform?
-                    system("cls")
-                else
-                     system("clear")
-                end
-                print "\e[2J\e[H"
-            end
-
-            def display_logo
-                puts self.runner.pastel.decorate(%q{
-______             _    ____    ___       ____
-| ___ \           | |  / ___|  /   |     /   /
-| |_/ / ___   ___ | |_/ /___  / /| |    /_  /_
-| ___ \/ _ \ / _ \| __| ___ \/ /_| |     /  _/
-| |_/ / (_) | (_) | |_| \_/ |\___  |    / ,'
-\____/ \___/ \___/ \__\_____/    |_/   /'
-                                                                       
-                }, :yellow, :bold)
-            end
 
             def run_menu(name)
-                clear_terminal
-                display_logo
-                definition = get_menu_definition(name)
+                self.putser.clear_terminal
+                self.putser.puts_logo
+                case name
+                when MENU_HOME_NAME
+                    definition = get_home_definition
+                when MENU_GENERATE_NAME
+                    definition =get_generate_definition
+                when MENU_ABOUT_NAME
+                    definition = get_about_definition
+                else
+                    raise
+                end
+
                 if definition[:on_mounted]
                     definition[:on_mounted].call
                 end
+
                 case definition[:behaviour]
                 when :action_on_select
-                    response = self.runner.prompt.select(
-                        self.runner.pastel.decorate("#{definition[:title]} \n", :bold),
+                    response = self.prompt.select(
+                        self.putser.get_string_bold("#{definition[:title]} \n"),
                         definition[:options].map {|option| option[:label]},
                         show_help: :never
                     )
@@ -54,27 +49,16 @@ ______             _    ____    ___       ____
                         raise
                     end
                     option_found[:action].call
+                when :action_on_enter
+                    
                 else
                     raise
                 end
             end
 
             def leave
-                clear_terminal
+                self.putser.clear_terminal
                 return
-            end
-
-            def get_menu_definition(name)
-                case name
-                when MENU_HOME_NAME
-                    get_home_definition
-                when MENU_GENERATE_NAME
-                    get_generate_definition
-                when MENU_ABOUT_NAME
-                    get_about_definition
-                else
-                    get_home_definition
-                end
             end
 
             def get_home_definition
@@ -113,14 +97,7 @@ ______             _    ____    ___       ____
 
             def get_about_definition
                 {
-                    on_mounted: -> () { 
-                        puts ("""
-#{self.runner.pastel.decorate("Description", :yellow, :bold)} : Boot64 est un CLI permettant de générer des APIs TypeScript
-              en se basant sur les modèle définis dans ActiveRecord
-#{self.runner.pastel.decorate("Version", :yellow, :bold)} : #{Boot64::VERSION}
-
-                    """)
-                    },
+                    on_mounted: -> () { self.putser.puts_about_text },
                     behaviour: :action_on_select,
                     title: '',
                     options: [
