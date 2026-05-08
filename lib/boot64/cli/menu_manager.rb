@@ -5,6 +5,7 @@ module Boot64
             attr_accessor :runner,
                           :prompt,
                           :putser,
+                          :file_manager,
                           :current_menu_data
 
             MENU_HOME_NAME = 'home'.freeze
@@ -16,6 +17,7 @@ module Boot64
                 self.runner = runner
                 self.putser = Boot64::CLI::Putser.new
                 self.prompt = TTY::Prompt.new(active_color: self.putser.get_detached_highlight_color)
+                self.file_manager = Boot64::CLI::FileManager.new
                 self.current_menu_data = {
                     current_menu_name: MENU_HOME_NAME,
                     previous_menu_name: nil,
@@ -115,12 +117,7 @@ module Boot64
                 {
                     behaviour: :action_on_select,
                     title: 'Test !',
-                    options: [
-                        {
-                            label: 'Génération fichier TypeScript',
-                            action: -> () { run_menu(MENU_GENERATE_SINGLE_NAME) }
-                        }
-                    ]
+                    options: options
                 }
             end
 
